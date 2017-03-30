@@ -3,7 +3,8 @@
 sudo apt-get -y install \
   apt-transport-https \
   ca-certificates \
-  curl
+  curl \
+  ecryptfs-utils
 
 # Google CLoud SDK
 export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
@@ -29,4 +30,8 @@ sudo apt-get update
 sudo apt-get -y install docker-ce
 sudo groupadd docker
 sudo usermod -aG docker $USER
-docker run hello-world
+echo "Now logout, log back in and run the command: \
+      \
+      docker run hello-world
+      \
+      to check that you can run docker without sudo"
