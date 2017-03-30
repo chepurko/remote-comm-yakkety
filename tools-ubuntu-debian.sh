@@ -30,8 +30,8 @@ sudo apt-get update
 sudo apt-get -y install docker-ce
 sudo groupadd docker
 sudo usermod -aG docker $USER
-echo "Now logout, log back in and run the command: \
-      \
-      docker run hello-world
-      \
-      to check that you can run docker without sudo"
+printf "Now logout, log back in and run the command:\n\
+      \n\
+      docker run hello-world\n\
+      \n\
+to check that you can run docker without sudo\n"
