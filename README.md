@@ -17,7 +17,7 @@ Simple Ubuntu 16.10 image with various packages installed for remote server mana
   * Or use a [JSON file](https://developers.google.com/identity/protocols/application-default-credentials#howtheywork "How the Application Default Credentials work")
 * Mount a GCS Bucket `gcsfuse -o allow_other my-bucket /mnt/my-bucket`
 * Start a container with the bucket mounted
-  `docker run -it -v /mnt/my-bucket:/mnt/my-bucket chepurko/remote-comm-jessie:v1.0.0 /bin/bash`
+  `docker run -it -v /mnt/my-bucket:/mnt/my-bucket chepurko/remote-comm-yakkety:v1.0.0 /bin/bash`
 
 ### Secrets and Credentials
 * Install `ecryptfs-utils`...
