@@ -29,6 +29,7 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" \
       --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 ENV PATH="/usr/local/src/kubernetes/client/bin/:$PATH"
+      PASSWORD_STORE_DIR="/mnt/gcsbucket/secret/.password-store"
 
 RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc && \
       printf "alias gpg='gpg --homedir /mnt/gcsbucket/secret/.gnupg'" > /root/.bash_aliases
