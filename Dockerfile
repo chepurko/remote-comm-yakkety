@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y \
       vim git \
       ca-certificates \
       curl wget lynx \
-      bzip2 xz-utils \
+      bzip2 xz-utils zip \
       build-essential \
       bash-completion \
       lsb-release apt-transport-https \
@@ -28,16 +28,20 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" \
       google-cloud-sdk gcsfuse \
       --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
+RUN cd /usr/local/src && \
+    curl -LO https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_linux_amd64.zip && \
+    curl -LO https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_SHA256SUMS && \
+    sha256sum vault_0.7.0_linux_amd64.zip && \
+    unzip vault_0.7.0_linux_amd64.zip -d /usr/local/bin && vault_0.7.0_linux_amd64.zip
+
 # More apps at the end so we don't have to rebuild the image from base layers
 
 RUN apt-get update && apt-get install -y \
         openssh-client \
-        pass man-db less \
+        man-db less \
         --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-ENV PATH="/usr/local/src/kubernetes/client/bin/:$PATH" \
-      PASSWORD_STORE_DIR="/root/gcsbucket/secret/.password-store" \
-      GNUPGHOME="/root/gcsbucket/secret/.gnupg"
+ENV PATH="/usr/local/src/kubernetes/client/bin/:$PATH"
 
 RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc
 
