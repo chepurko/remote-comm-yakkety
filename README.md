@@ -20,17 +20,22 @@ Simple Ubuntu 16.10 image with various packages installed for remote server mana
 * Obtain Application Default Credentials for `gcsfuse`
   * `gcloud auth application-default login`
   * Or use a [JSON file](https://developers.google.com/identity/protocols/application-default-credentials#howtheywork "How the Application Default Credentials work")
-* Mount a GCS Bucket `gcsfuse -o allow_other my-bucket /mnt/my-bucket`.
-  * You may need to create your directory, give it permissions, and also edit the `/etc/fuse.conf` file to enable the `allow_other` option.
+* Mount a GCS Bucket `gcsfuse -o allow_other name_of_your_GCS_bucket /mnt/gcsbucket`.
+  * You will need to create a `/mnt/gcsbucket` directory, give it permissions, and also edit the `/etc/fuse.conf` file to enable the `allow_other` option.
 
 ### Secrets and Credentials
 * Create a `Secret` directory in you bucket and encrypt it with `ecryptfs`
   ```bash
-  cd /mnt/my-bucket
+  cd /mnt/gcsbucket
   mkdir -m 700 .secret
   mkdir -m 500 secret
   sudo mount -t ecryptfs .secret/ secret/
   ```
-* Go through the setup steps and write down your chosen passphrase. You can unmount and re-encrypt your secrets with `sudo umount /mnt/my-bucket/secret/`
-* Start a container with the bucket mounted
-  `docker run -it -v /mnt/my-bucket:/mnt/my-bucket chepurko/remote-comm-yakkety:v1.0.0 /bin/bash`
+* Go through the setup steps and write down your chosen passphrase.
+  * You can unmount and re-encrypt your secrets with `sudo umount /mnt/gcsbucket/secret/`.
+  * Repeat the `sudo mount -t ecryptfs .secret/ secret/` to mount your secret directory anytime, going through the interactive prompts and answering the same way as when you initially set it up.
+  
+* Start a container with the bucket and secrets mounted:
+  `docker run -it -v /mnt/gcsbucket:/mnt/gcsbucket chepurko/remote-comm-yakkety /bin/bash`
+
+* **NOTE: The Dockerfile relies on your directory being named `/mnt/gcsbucket`, so if you must use a different dir name then you'll have to modify the Dockerfile on your own as welll.**
