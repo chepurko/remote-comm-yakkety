@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y \
       vim git \
       ca-certificates \
       curl wget lynx \
-      bzip2 xz-utils zip \
+      bzip2 xz-utils zip unzip \
       build-essential \
       bash-completion \
       lsb-release apt-transport-https \
@@ -32,7 +32,7 @@ RUN cd /usr/local/src && \
     curl -LO https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_linux_amd64.zip && \
     curl -LO https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_SHA256SUMS && \
     sha256sum vault_0.7.0_linux_amd64.zip && \
-    unzip vault_0.7.0_linux_amd64.zip -d /usr/local/bin && vault_0.7.0_linux_amd64.zip
+    unzip vault_0.7.0_linux_amd64.zip -d /usr/local/bin && rm vault_0.7.0_linux_amd64.zip
 
 # More apps at the end so we don't have to rebuild the image from base layers
 
