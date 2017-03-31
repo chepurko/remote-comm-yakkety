@@ -30,7 +30,8 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" \
 
 ENV PATH="/usr/local/src/kubernetes/client/bin/:$PATH"
 
-RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc
+RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc && \
+      printf "alias gpg='gpg --homedir /mnt/gcsbucket/secret/.gnupg'" > /root/.bash_aliases
 
 COPY .vimrc /root/
 
@@ -38,4 +39,5 @@ COPY .vimrc /root/
 
 RUN apt-get update && apt-get install -y \
         openssh-client \
+        pass man-db less \
         --no-install-recommends && rm -rf /var/lib/apt/lists/*
