@@ -28,17 +28,17 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" \
       google-cloud-sdk gcsfuse \
       --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-ENV PATH="/usr/local/src/kubernetes/client/bin/:$PATH" \
-      PASSWORD_STORE_DIR="~/gcsbucket/secret/.password-store" \
-      GNUPGHOME="~/gcsbucket/secret/.gnupg"
-
-RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc
-
-COPY .vimrc /root/
-
 # More apps at the end so we don't have to rebuild the image from base layers
 
 RUN apt-get update && apt-get install -y \
         openssh-client \
         pass man-db less \
         --no-install-recommends && rm -rf /var/lib/apt/lists/*
+
+ENV PATH="/usr/local/src/kubernetes/client/bin/:$PATH" \
+      PASSWORD_STORE_DIR="/root/gcsbucket/secret/.password-store" \
+      GNUPGHOME="/root/gcsbucket/secret/.gnupg"
+
+RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc
+
+COPY .vimrc /root/
