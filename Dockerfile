@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
       build-essential \
       bash-completion \
       lsb-release apt-transport-https \
-      --no-install-recommends && rm -rf /var/lib/apt/lists/*
+      rm -rf /var/lib/apt/lists/*
     
 RUN cd /usr/local/src && \
     curl -LO https://github.com/kubernetes/kubernetes/releases/download/v1.6.0/kubernetes.tar.gz && \
@@ -28,18 +28,12 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" \
       google-cloud-sdk gcsfuse \
       --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-RUN cd /usr/local/src && \
-    curl -LO https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_linux_amd64.zip && \
-    curl -LO https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_SHA256SUMS && \
-    sha256sum vault_0.7.0_linux_amd64.zip && \
-    unzip vault_0.7.0_linux_amd64.zip -d /usr/local/bin && rm vault_0.7.0_linux_amd64.zip
-
 # More apps at the end so we don't have to rebuild the image from base layers
 
 RUN apt-get update && apt-get install -y \
         openssh-client \
         man-db less \
-        --no-install-recommends && rm -rf /var/lib/apt/lists/*
+        rm -rf /var/lib/apt/lists/*
 
 ENV PATH="/usr/local/src/kubernetes/client/bin/:$PATH"
 
