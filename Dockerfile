@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
       bzip2 xz-utils zip unzip \
       build-essential \
       bash-completion \
-      lsb-release apt-transport-https \
+      lsb-release apt-transport-https && \
       rm -rf /var/lib/apt/lists/*
     
 RUN cd /usr/local/src && \
@@ -32,7 +32,7 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" \
 
 RUN apt-get update && apt-get install -y \
         openssh-client \
-        man-db less \
+        man-db less && \
         rm -rf /var/lib/apt/lists/*
 
 ENV PATH="/usr/local/src/kubernetes/client/bin/:$PATH"
