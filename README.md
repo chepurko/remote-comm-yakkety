@@ -34,7 +34,7 @@ Simple Ubuntu 16.10 image with various packages installed for remote server mana
 * Create a `Secret` directory in you bucket and encrypt it with `ecryptfs`
 
   ```bash
-  cd ~/gcsbucket
+  cd /mnt/gcsbucket
   mkdir -m 700 .secret
   mkdir -m 500 secret
   sudo mount -t ecryptfs .secret/ secret/
